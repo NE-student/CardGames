@@ -10,3 +10,7 @@ vertexShader = shadersFolder + "vertex_shader.glsl"
 defaultFragmentShader = shadersFolder + "fragment_shader.glsl"
 
 cardUi = uiFolder + "card.ui"
+backCardUi = uiFolder + "backcard.ui"
+stockPileUi = uiFolder + "stockPile.ui"
+blankPileUi = uiFolder + "BlankDeck.ui"
+

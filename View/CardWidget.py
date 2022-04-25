@@ -1,7 +1,7 @@
 from UseCases.General.DefaultCard import DefaultCard
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5 import uic, QtGui
-from Infrastructure.FilePath import cardUi, imgTypesCard
+from Infrastructure.FilePath import cardUi, backCardUi, imgTypesCard
 import sys
 
 
@@ -19,17 +19,15 @@ class CardWidget(QWidget):
         self.grade_lbl.setText(self.card.rank)
         self.image_lbl.setPixmap(QtGui.QPixmap.fromImage(QtGui.QImage(imgTypesCard[self.card.mark.value])))
 
-        self.setStyleSheet("background:#fff;")
         self.setMinimumSize(self.ui.minimumSize())
         self.setMaximumSize(self.ui.maximumSize())
 
     def flip(self):
-        if self.isFace:
-            self.grade_lbl.hide()
-            self.image_lbl.hide()
+        if self.card.isStatsVisible:
+            self.ui = uic.loadUi(backCardUi)
         else:
-            self.grade_lbl.show()
-            self.image_lbl.show()
+            self.ui = uic.loadUi(cardUi)
+        self.setLayout(self.ui.layout())
         self.card.flip()
 
 if __name__ == "__main__":

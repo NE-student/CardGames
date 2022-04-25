@@ -5,7 +5,7 @@ class Card:
         self.isStatsVisible = True
 
     def flip(self):
-        self.isStatsVisible = not self.StatsVisible
+        self.isStatsVisible = not self.isStatsVisible
 
     @property
     def rank(self):

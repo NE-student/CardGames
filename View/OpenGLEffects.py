@@ -49,7 +49,7 @@ class glWidget(QOpenGLWidget):
         self.timer = QTimer()
         self.timer.timeout.connect(self.paintGL)
         self.timer.timeout.connect(self.update)
-        #self.timer.start(10)
+        self.timer.start(10)
 
     def mousePressEvent(self, QMouseEvent):
         QOpenGLWidget.mousePressEvent(self, QMouseEvent)
@@ -101,7 +101,7 @@ class BackGround(glWidget):
 
         self.setLayout(self.l)
 
-        self.l.setContentsMargins(5, 2, 5, 2)
+        self.l.setContentsMargins(5, 4, 5, 4)
         self.setMinimumSize(w.minimumSize())
         self.setMaximumSize(w.maximumSize())
 
