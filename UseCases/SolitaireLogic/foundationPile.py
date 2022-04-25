@@ -1,0 +1,25 @@
+from UseCases.General.BlankDeck import BlankDeck
+from UseCases.General.DefaultCard import DefaultCard
+from CardDataAccess.CardDataAccess import CardInfo
+from Infrastructure.ListHelper import isNextElement
+
+
+class FoundationPile(BlankDeck):
+    def __init__(self):
+        super(FoundationPile, self).__init__()
+        self.mark = -1
+
+    def appendCard(self, card: DefaultCard):
+        if self.mark == -1 and card.rank == CardInfo.ranks[0]:
+            super().appendCard(card)
+            self.mark = card.mark
+            return True
+        if isNextElement(CardInfo.ranks, self.getCards(), card.rank):
+            super().appendCard(card)
+            return True
+        return False
+
+    def isCompleted(self):
+        if (self.getCards()[-1].rank == CardInfo.ranks[-1]):
+            return True
+        return False
