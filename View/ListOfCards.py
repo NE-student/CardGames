@@ -6,7 +6,7 @@ from PyQt5.QtCore import QSize
 import sys
 
 
-class Area(QWidget):
+class ListOfCards(QWidget):
     def __init__(self, deck, custom_card_view=None, parent=None):
         super().__init__(parent)
         self.setLayout(QGridLayout(self))
@@ -41,6 +41,6 @@ class Area(QWidget):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     deck = StartDeck()
-    window = Area(deck, BackGround)
+    window = ListOfCards(deck, BackGround)
     window.show()
     sys.exit(app.exec())

@@ -1,6 +1,7 @@
-from CardDataAccess.CardDataAccess import CardInfo
+from Infrastructure.DataAccess.CardDataAccess import CardInfo
 from UseCases.General.DefaultCard import DefaultCard
 from UseCases.General.BlankDeck import BlankDeck
+
 
 class StartDeck(BlankDeck):
     def __init__(self):
@@ -10,7 +11,7 @@ class StartDeck(BlankDeck):
     def makeDefaultSequence(self):
         for mark in CardInfo.marks:
             for rank in CardInfo.ranks:
-                self.appendCard(DefaultCard(rank, mark))
+                self.append(DefaultCard(rank, mark))
 
 
 if __name__ == "__main__":

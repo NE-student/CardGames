@@ -1,5 +1,5 @@
 from Entities.Card import Card
-from CardDataAccess.CardDataAccess import CardInfo
+from Infrastructure.DataAccess.CardDataAccess import CardInfo
 
 
 class DefaultCard(Card):

@@ -5,7 +5,7 @@ from UseCases.General.DefaultCard import DefaultCard
 import sys
 import numpy as np
 import moderngl
-from Infrastructure.FileFolders import shadersFolder
+from Infrastructure.DataAccess.FileFolders import shadersFolder
 
 
 

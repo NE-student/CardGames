@@ -9,7 +9,7 @@ class StockAndWasteRelationship:
     def flipCardFromStockPile(self):
         card = self.stock.popLastCard()
         if card is not None:
-            self.waste.appendCard(card)
+            self.waste.append(card)
             return True
         return False
 

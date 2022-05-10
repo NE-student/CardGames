@@ -1,6 +1,7 @@
 import sys
 
-absolutePath = sys.path[1].replace("\\", "/") + "/"
+#absolutePath = sys.path[1].replace("\\", "/") + "/"
+absolutePath = "D:/University/Python/Solitaire/"
 dataFolder = absolutePath + "Data/"
 srcFolder = dataFolder + "src/"
 uiFolder = srcFolder + "ui/"

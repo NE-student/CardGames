@@ -21,16 +21,16 @@ class Solitaire(Game):
 
         for i in range(len(self.tableau.columns)):
             for j in range(i):
-                card = self.startDeck.popCard(rn(0, len(self.startDeck.getCards())))
-                self.tableau.columns[i].appendCard(card)
-            card = self.startDeck.popCard(rn(0, len(self.startDeck.getCards())))
+                index = rn(0, len(self.startDeck)-1)
+                card = self.startDeck.popCard(index)
+                self.tableau.columns[i].startedAppend(card)
+            index = rn(0, len(self.startDeck) - 1)
+            card = self.startDeck.popCard(index)
             card.flip()
-            self.tableau.columns[i].appendCard(card)
+            self.tableau.columns[i].startedAppend(card)
 
         self.snw.stock.setCards(self.startDeck.getCards())
-
         self.startDeck = BlankDeck()
-
 
     def resume(self):
         pass
@@ -47,3 +47,8 @@ class Solitaire(Game):
     def load(self):
         pass
 
+
+if __name__ == "__main__":
+    game = Solitaire()
+    game.start()
+    print(game.tableau)

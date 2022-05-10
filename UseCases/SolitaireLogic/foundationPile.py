@@ -1,6 +1,6 @@
 from UseCases.General.BlankDeck import BlankDeck
 from UseCases.General.DefaultCard import DefaultCard
-from CardDataAccess.CardDataAccess import CardInfo
+from Infrastructure.DataAccess.CardDataAccess import CardInfo
 from Infrastructure.ListHelper import isNextElement
 
 
@@ -9,13 +9,13 @@ class FoundationPile(BlankDeck):
         super(FoundationPile, self).__init__()
         self.mark = -1
 
-    def appendCard(self, card: DefaultCard):
+    def append(self, card: DefaultCard):
         if self.mark == -1 and card.rank == CardInfo.ranks[0]:
-            super().appendCard(card)
+            super().append(card)
             self.mark = card.mark
             return True
         if isNextElement(CardInfo.ranks, self.getCards(), card.rank):
-            super().appendCard(card)
+            super().append(card)
             return True
         return False
 

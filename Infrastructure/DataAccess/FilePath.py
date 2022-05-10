@@ -1,4 +1,4 @@
-from Infrastructure.FileFolders import *
+from Infrastructure.DataAccess.FileFolders import *
 
 Clovers = cardTypesFolder + "Clovers.png"
 Diamonds = cardTypesFolder + "Diamonds.png"

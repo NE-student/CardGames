@@ -1,28 +1,34 @@
 from UseCases.General.BlankDeck import BlankDeck
 from UseCases.General.DefaultCard import DefaultCard
-from CardDataAccess.CardDataAccess import CardInfo
+from Infrastructure.DataAccess.CardDataAccess import CardInfo
 from Infrastructure.ListHelper import isNextElement
 
+
 class ColumnOfTableau(BlankDeck):
-    reverseRanksSequence = CardInfo.ranks.reverse()
+    reverseRanksSequence = CardInfo.ranks
     KingCode = 0
+
     def __init__(self):
         super(ColumnOfTableau, self).__init__()
+        self.reverseRanksSequence.reverse()
 
-    def appendCard(self, card: DefaultCard):
+    def append(self, card: DefaultCard):
         if card.isStatsVisible == False:
-            super(ColumnOfTableau, self).appendCard(card)
+            super(ColumnOfTableau, self).append(card)
             return True
 
-        if self.isBlank() and card.rank == self.reverseRanksSequence[self.KingCode]:
-            super(ColumnOfTableau, self).appendCard(card)
+        if self.isBlank() or card.rank == self.reverseRanksSequence[self.KingCode]:
+            super(ColumnOfTableau, self).append(card)
             return True
 
         if self.getCards()[-1].isRed() != card.isRed() and \
                 isNextElement(self.reverseRanksSequence, self.getCards(), card.rank):
-            super(ColumnOfTableau, self).appendCard(card)
+            super(ColumnOfTableau, self).append(card)
             return True
         return False
+
+    def startedAppend(self, card: DefaultCard):
+        super(ColumnOfTableau, self).append(card)
 
     def appendCards(self, cards: list):
         if self.isBlank() and \
@@ -37,7 +43,7 @@ class ColumnOfTableau(BlankDeck):
         return False
 
     def popCard(self, index:int):
-        if index == len(self.getCards()-1):
+        if index == len(self.getCards())-1:
             return super(ColumnOfTableau, self).popCard(index)
         else:
             tmp = self.getCards()

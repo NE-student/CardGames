@@ -11,9 +11,9 @@ class WastePile(BlankDeck):
         self.setBlankDeck()
         return tmp
 
-    def appendCard(self, card: Card):
-        super().appendCard(card)
-        self.toggleAllElements()
+    def append(self, card: Card):
+        super().append(card)
+        self.toggleAllCards()
 
     def popLastCard(self):
         return super(WastePile, self).popCard(-1)
