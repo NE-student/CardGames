@@ -1,9 +1,12 @@
-from UseCases.General.BlankDeck import BlankDeck
+from UseCases.General.EmptyDeck import EmptyDeck
+from Entities.Card import Card
 
-
-class StockPile(BlankDeck):
+class StockPile(EmptyDeck):
     def __init__(self):
         super(StockPile, self).__init__()
 
-    def popLastCard(self):
-        return super(StockPile, self).popCard(-1)
+    def append(self, card: Card):
+        super().append(card)
+        if card.isStatsVisible:
+            card.flip()
+

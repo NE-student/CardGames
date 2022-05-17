@@ -1,10 +1,10 @@
-from UseCases.General.BlankDeck import BlankDeck
+from UseCases.General.EmptyDeck import EmptyDeck
 from UseCases.General.DefaultCard import DefaultCard
 from Infrastructure.DataAccess.CardDataAccess import CardInfo
 from Infrastructure.ListHelper import isNextElement
 
 
-class FoundationPile(BlankDeck):
+class FoundationPile(EmptyDeck):
     def __init__(self):
         super(FoundationPile, self).__init__()
         self.mark = -1

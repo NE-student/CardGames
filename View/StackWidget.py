@@ -1,6 +1,7 @@
 from View.CardWidget import CardWidget
+from UseCases.General.DefaultCard import DefaultCard
 from View.OpenGLEffects import BackGround
-from UseCases.General.StartDeck import StartDeck
+from UseCases.General.StartedDeck import StartedDeck
 from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QGridLayout
 from PyQt5.QtCore import QSize
 import sys
@@ -12,7 +13,7 @@ class StackWidget(QWidget):
         self.deck = deck
         self.createStack()
 
-        card = CardWidget(self.deck[0])
+        card = CardWidget(DefaultCard())
         self.setMinimumSize(card.minimumSize())
         card.deleteLater()
 
@@ -62,7 +63,7 @@ class StackWidget(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    deck = StartDeck()
+    deck = StartedDeck()
     deck.makeRandomSequence()
     window = StackWidget(deck)
     window.show()

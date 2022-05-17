@@ -1,19 +1,15 @@
-from UseCases.General.BlankDeck import BlankDeck
-from  Entities.Card import Card
+from UseCases.General.EmptyDeck import EmptyDeck
+from Entities.Card import Card
 
 
-class WastePile(BlankDeck):
+class WastePile(EmptyDeck):
     def __init__(self):
         super(WastePile, self).__init__()
 
     def clear(self):
-        tmp = self.getCards()
-        self.setBlankDeck()
-        return tmp
+        return self.popCards()
 
     def append(self, card: Card):
         super().append(card)
-        self.toggleAllCards()
-
-    def popLastCard(self):
-        return super(WastePile, self).popCard(-1)
+        if not card.isStatsVisible:
+            card.flip()

@@ -1,10 +1,10 @@
-from UseCases.General.BlankDeck import BlankDeck
+from UseCases.General.EmptyDeck import EmptyDeck
 from UseCases.General.DefaultCard import DefaultCard
 from Infrastructure.DataAccess.CardDataAccess import CardInfo
 from Infrastructure.ListHelper import isNextElement
 
 
-class ColumnOfTableau(BlankDeck):
+class ColumnOfTableau(EmptyDeck):
     reverseRanksSequence = CardInfo.ranks
     KingCode = 0
 
@@ -17,7 +17,7 @@ class ColumnOfTableau(BlankDeck):
             super(ColumnOfTableau, self).append(card)
             return True
 
-        if self.isBlank() or card.rank == self.reverseRanksSequence[self.KingCode]:
+        if self.isEmpty() or card.rank == self.reverseRanksSequence[self.KingCode]:
             super(ColumnOfTableau, self).append(card)
             return True
 
@@ -31,7 +31,7 @@ class ColumnOfTableau(BlankDeck):
         super(ColumnOfTableau, self).append(card)
 
     def appendCards(self, cards: list):
-        if self.isBlank() and \
+        if self.isEmpty() and \
                 cards[self.KingCode].rank == self.reverseRanksSequence[self.KingCode]:
             super(ColumnOfTableau, self).appendCards(cards)
             return True

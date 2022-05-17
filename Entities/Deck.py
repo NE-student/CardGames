@@ -1,6 +1,5 @@
 from Infrastructure.StackIterator import StackIterator
 from Entities.Card import *
-from random import randint as rn
 
 
 class Deck:
@@ -11,9 +10,9 @@ class Deck:
         return StackIterator(self._cards)
 
     def __getitem__(self, item):
-        if isinstance(item, int):
+        if isinstance(item, int) and not self.isEmpty():
             return self._cards[item]
-        raise IndexError
+        return None
 
     def __len__(self):
         return len(self._cards)
@@ -23,15 +22,6 @@ class Deck:
         for card in self._cards:
             result += f"{card}; \n"
         return result
-
-    def makeRandomSequence(self):
-        tmp = Deck([])
-        length = len(self)
-        while length > 0:
-            index = rn(0, length-1)
-            tmp.append(self.popCard(index))
-            length = len(self)
-        self._cards = tmp.getCards()
 
     def append(self, card: Card):
         if isinstance(card, Card):
@@ -43,26 +33,21 @@ class Deck:
         for card in cards:
             self.append(card)
 
-    def popCard(self, index: int):
+    def popCard(self, index=-1):
         return self._cards.pop(index)
+
+    def popCards(self):
+        tmp = self.getCards()
+        self._cards = []
+        return tmp
 
     def getCards(self):
         return self._cards.copy()
 
-    def setCards(self, cards: list):
-        tmp = Deck(self.getCards())
-        self._cards = []
-        try:
-            for card in cards:
-                self.append(card)
-        finally:
-            if len(self) == 0:
-                self._cards = tmp.getCards()
-                return False
+    def isEmpty(self):
+        if len(self) == 0:
             return True
-
-    def setBlankDeck(self):
-        self._cards = []
+        return False
 
 
 

@@ -2,18 +2,18 @@ from UseCases.SolitaireLogic.stockPile import StockPile
 from UseCases.SolitaireLogic.wastePile import WastePile
 
 class StockAndWasteRelationship:
-    def __init__(self):
-        self.stock = StockPile()
-        self.waste = WastePile()
+    def __init__(self, stock, waste):
+        self.stock = stock
+        self.waste = waste
 
     def flipCardFromStockPile(self):
-        card = self.stock.popLastCard()
+        card = self.stock.popCard()
         if card is not None:
             self.waste.append(card)
             return True
         return False
 
     def restart(self):
-        if self.stock.isBlank() and not self.waste.isBlank():
+        if self.stock.isEmpty() and not self.waste.isEmpty():
             cards = self.waste.clear()
-            self.stock.setCards(cards)
+            self.stock.appendCards(cards)

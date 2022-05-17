@@ -1,21 +1,21 @@
 class Game:
     def __init__(self):
-        pass
+        raise NotImplemented
 
     def start(self):
-        pass
+        raise NotImplemented
 
     def pause(self):
-        pass
+        raise NotImplemented
 
     def resume(self):
-        pass
+        raise NotImplemented
 
     def exit(self):
-        pass
+        raise NotImplemented
 
     def load(self):
-        pass
+        raise NotImplemented
 
     def save(self):
-        pass
+        raise NotImplemented
