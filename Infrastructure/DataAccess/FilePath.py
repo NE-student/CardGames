@@ -13,4 +13,5 @@ cardUi = uiFolder + "card.ui"
 backCardUi = uiFolder + "backcard.ui"
 stockPileUi = uiFolder + "stockPile.ui"
 blankPileUi = uiFolder + "BlankDeck.ui"
+solitaireUi = uiFolder + "Solitaire.ui"
 

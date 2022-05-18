@@ -9,11 +9,11 @@ import sys
 
 
 class StockAndWasteWidget(QWidget):
-    def __init__(self, deck, parent=None):
+    def __init__(self, stock, waste, parent=None):
         super(StockAndWasteWidget, self).__init__(parent)
 
-        self.StockPileWidget = StockPileWidget(deck, self)
-        self.WastePileWidget = WastePileWidget(EmptyDeck(), self)
+        self.StockPileWidget = StockPileWidget(stock)
+        self.WastePileWidget = WastePileWidget(waste)
 
         self.StockPileWidget.clicked.connect(self.StockPileWidgetclicked)
 
@@ -44,6 +44,6 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     deck = StartedDeck()
     deck.makeRandomSequence()
-    window = StockAndWasteWidget(deck)
+    window = StockAndWasteWidget(deck, EmptyDeck())
     window.show()
     sys.exit(app.exec())

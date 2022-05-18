@@ -1,6 +1,8 @@
 from Entities.Game import Game
 from UseCases.SolitaireLogic.Tableau import Tableau
 from UseCases.SolitaireLogic.stockNwastePiles import StockAndWasteRelationship
+from UseCases.SolitaireLogic.stockPile import StockPile
+from UseCases.SolitaireLogic.wastePile import WastePile
 from UseCases.SolitaireLogic.foundationPile import FoundationPile
 from UseCases.General.EmptyDeck import EmptyDeck
 from UseCases.General.StartedDeck import StartedDeck
@@ -10,14 +12,16 @@ from random import randint as rn
 class Solitaire(Game):
     def __init__(self):
         self.tableau = Tableau()
-        self.snw = StockAndWasteRelationship()
+        self.stock = StockPile()
+        self.waste = WastePile()
+        self.snw = StockAndWasteRelationship(self.stock, self.waste)
         self.foundationPiles = [FoundationPile() for i in range(4)]
-        self.startDeck = EmptyDeck()
+        self.startDeck = None
 
     def start(self):
         self.startDeck = StartedDeck()
         self.startDeck.makeRandomSequence()
-        self.startDeck.toggleDeck()
+        self.startDeck.hideAllCardsStats()
 
         for i in range(len(self.tableau.columns)):
             for j in range(i):
@@ -29,7 +33,7 @@ class Solitaire(Game):
             card.flip()
             self.tableau.columns[i].startedAppend(card)
 
-        self.snw.stock.setCards(self.startDeck.getCards())
+        self.snw.stock.appendCards(self.startDeck.getCards())
         self.startDeck = EmptyDeck()
 
     def resume(self):
