@@ -27,10 +27,10 @@ class Solitaire(Game):
             for j in range(i):
                 index = rn(0, len(self.startDeck)-1)
                 card = self.startDeck.popCard(index)
+                card.flip()
                 self.tableau.columns[i].startedAppend(card)
             index = rn(0, len(self.startDeck) - 1)
             card = self.startDeck.popCard(index)
-            card.flip()
             self.tableau.columns[i].startedAppend(card)
 
         self.snw.stock.appendCards(self.startDeck.getCards())

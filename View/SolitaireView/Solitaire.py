@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout
 from PyQt5.QtCore import QSize
 from PyQt5 import uic
 from View.SolitaireView.snwWidget import StockAndWasteWidget
-from View.DragNDropTest import Area
+from View.SolitaireView.TableauWidget import TableauWidget
 from UseCases.SolitaireLogic.Solitaire import Solitaire
 from Infrastructure.DataAccess.FilePath import solitaireUi
 
@@ -18,9 +18,13 @@ class SolitaireWidget(QWidget):
         self.Solitaire.start()
 
         self.snw = StockAndWasteWidget(self.Solitaire.stock, self.Solitaire.waste)
+        self.TableauWidget = TableauWidget(self.Solitaire.tableau, self)
+
+
 
         self.ui = uic.loadUi(solitaireUi)
         self.ui.Top.addWidget(self.snw)
+        self.ui.Bottom.addWidget(self.TableauWidget)
 
 
         self.setLayout(self.ui.layout())
@@ -29,6 +33,7 @@ class SolitaireWidget(QWidget):
 
 
     def show(self) -> None:
+        self.TableauWidget.show()
         self.snw.show()
         super(SolitaireWidget, self).show()
 

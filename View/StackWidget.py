@@ -8,7 +8,7 @@ import sys
 
 
 class StackWidget(QWidget):
-    def __init__(self, deck, custom_card_view=None, parent=None):
+    def __init__(self, deck, parent=None):
         super(StackWidget, self).__init__(parent)
         self.deck = deck
         self.createStack()
@@ -19,7 +19,7 @@ class StackWidget(QWidget):
 
     def createStack(self):
         for i in range(len(self.deck) - 1, -1, -1):
-            card = CardWidget(self.deck[i], self)
+            card = CardWidget(self.deck[i], parent=self)
             card.show()
 
 
