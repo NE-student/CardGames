@@ -12,5 +12,5 @@ class Tableau:
         return result
 
     def popCardFrom(self, column, index):
-        self.columns[column].popCard(index)
+        self.columns[column].pop(index)
 

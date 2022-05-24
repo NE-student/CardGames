@@ -13,6 +13,14 @@ class TableauWidget(QWidget):
         for column in self.columns:
             self.layout().addWidget(column)
 
+    def refresh(self):
+        for column in self.columns:
+            column.refresh()
+
+    def dropCardconnect(self, slot):
+        for column in self.columns:
+            column.signals.dropCard.connect(slot)
+
     def show(self) -> None:
         for column in self.columns:
             column.show()

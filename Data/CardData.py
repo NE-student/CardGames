@@ -12,4 +12,6 @@ class Marks(Enum):
         return f"{Marks.Clovers.value}, {Marks.Diamonds.value}, {Marks.Spades.value}, {Marks.Hearts.value}"
 
 
+
+
 Ranks = ["A"] + [str(i) for i in range(2,11,1)] + ["J", "Q", "K"]

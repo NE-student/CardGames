@@ -1,6 +1,5 @@
-from UseCases.General.StartedDeck import StartedDeck
 from PyQt5.QtWidgets import QApplication, QPushButton, QHBoxLayout
-from UseCases.General.EmptyDeck import EmptyDeck
+from UseCases.General.DefaultDeck import DefaultDeck
 from View.EmptyDeckWidget import EmptyDeckWidget
 from UseCases.SolitaireLogic.wastePile import WastePile
 import sys
@@ -9,11 +8,11 @@ import sys
 class WastePileWidget(QPushButton):
     def __init__(self, deck, parent=None):
         super(WastePileWidget, self).__init__(parent)
-        self.WastePile = WastePile()
+        self.WastePile = deck
         self.Layout = QHBoxLayout(self)
 
         self.WastePile.appendCards(deck.getCards())
-        self.EmptyDeckWidget = EmptyDeckWidget(self.WastePile)
+        self.EmptyDeckWidget = EmptyDeckWidget(self.WastePile, True, False, self)
         self.Layout.addWidget(self.EmptyDeckWidget)
 
         self.Layout.setContentsMargins(0, 0, 0, 0)
@@ -26,11 +25,15 @@ class WastePileWidget(QPushButton):
         self.EmptyDeckWidget.show()
         super(WastePileWidget, self).show()
 
+    def refresh(self):
+        self.EmptyDeckWidget.refresh()
+
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    deck = StartedDeck()
+    deck = DefaultDeck()
+    deck.makeDefaultSequence()
     window = WastePileWidget(deck)
     window.show()
     sys.exit(app.exec())

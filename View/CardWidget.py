@@ -1,11 +1,15 @@
 from UseCases.General.DefaultCard import DefaultCard
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
-from PyQt5.QtCore import Qt, QMimeData
+from PyQt5.QtCore import Qt, QMimeData, pyqtSignal, QObject
 from PyQt5.QtGui import QDrag
 from PyQt5 import uic, QtGui
 from Infrastructure.DataAccess.FilePath import cardUi, imgTypesCard, backCardUi
 import sys
+import pickle
 
+class Signals(QObject):
+
+    popCard = pyqtSignal()
 
 class CardWidget(QPushButton):
     def __init__(self, card=None, mouseTracking = True,parent=None):
@@ -14,6 +18,7 @@ class CardWidget(QPushButton):
         self.ui = uic.loadUi(cardUi)
         self.grade_lbl = self.ui.Grade
         self.image_lbl = self.ui.Img
+        self.mouseTracking = mouseTracking
 
         self.setCard(card)
 
@@ -23,17 +28,24 @@ class CardWidget(QPushButton):
         self.Layout.addWidget(self.bg)
         self.setLayout(self.Layout)
 
+        self.signals = Signals()
+
         self.Layout.setContentsMargins(0, 0, 0, 0)
         self.setMinimumSize(self.ui.minimumSize())
         self.setMaximumSize(self.ui.maximumSize())
-        self.setMouseTracking(mouseTracking)
 
     def mouseMoveEvent(self, e) -> None:
         if self.hasMouseTracking() and e.buttons() == Qt.LeftButton:
             mimedata = QMimeData()
+            mimedata.setText(str(self.card.rank) +"/"+ str(self.card.mark.value))
             drag = QDrag(self)
             drag.setMimeData(mimedata)
+            drag.setHotSpot(e.pos())
             dropAction = drag.exec_(Qt.MoveAction)
+            #if dropAction==2:
+                #self.signals.popCard.emit()
+
+
 
     def setCard(self, card):
         self.card = card
@@ -56,6 +68,7 @@ class CardWidget(QPushButton):
             self.showFrontSide()
         else:
             self.showBackSide()
+        self.setMouseTracking(self.mouseTracking and self.card.isStatsVisible)
         super().show()
 
     def flip(self):

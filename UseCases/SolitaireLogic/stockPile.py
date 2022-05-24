@@ -1,7 +1,7 @@
-from UseCases.General.EmptyDeck import EmptyDeck
+from UseCases.General.DefaultDeck import DefaultDeck
 from Entities.Card import Card
 
-class StockPile(EmptyDeck):
+class StockPile(DefaultDeck):
     def __init__(self):
         super(StockPile, self).__init__()
 

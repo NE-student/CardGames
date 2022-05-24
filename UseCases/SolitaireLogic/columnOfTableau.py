@@ -1,10 +1,11 @@
-from UseCases.General.EmptyDeck import EmptyDeck
+from UseCases.General.DefaultDeck import DefaultDeck
+from Entities.Card import Card
 from UseCases.General.DefaultCard import DefaultCard
 from Infrastructure.DataAccess.CardDataAccess import CardInfo
 from Infrastructure.ListHelper import isNextElement
 
 
-class ColumnOfTableau(EmptyDeck):
+class ColumnOfTableau(DefaultDeck):
     reverseRanksSequence = CardInfo.ranks
     KingCode = 0
 
@@ -12,8 +13,11 @@ class ColumnOfTableau(EmptyDeck):
         super(ColumnOfTableau, self).__init__()
         self.reverseRanksSequence.reverse()
 
-    def append(self, card: DefaultCard):
-        if card.isStatsVisible == False:
+    def append(self, card: DefaultCard, permanently=False):
+        if permanently:
+            super(ColumnOfTableau, self).append(card)
+            return True
+        if not card.isStatsVisible:
             super(ColumnOfTableau, self).append(card)
             return True
 
@@ -27,8 +31,9 @@ class ColumnOfTableau(EmptyDeck):
             return True
         return False
 
-    def startedAppend(self, card: DefaultCard):
-        super(ColumnOfTableau, self).append(card)
+    def showLastCard(self):
+        if self[-1] is not None and not self[-1].isStatsVisible:
+            self[-1].flip()
 
     def appendCards(self, cards: list):
         if self.isEmpty() and \
@@ -42,12 +47,20 @@ class ColumnOfTableau(EmptyDeck):
             return True
         return False
 
-    def popCard(self, index:int):
-        if index == len(self.getCards())-1:
-            return super(ColumnOfTableau, self).popCard(index)
+    def pop(self, index:int):
+        if isinstance(index, Card):
+            card = super(ColumnOfTableau, self).pop(index)
+            self.showLastCard()
+            return card
+        if index == -1 or index == len(self.getCards())-1:
+            card = super(ColumnOfTableau, self).pop()
+            self.showLastCard()
+            return card
         else:
             tmp = self.getCards()
             upPiece = tmp[:index]
             downPiece = tmp[index:]
-            self.setCards(upPiece)
+            self.popCards()
+            self.appendCards(upPiece)
+            self.showLastCard()
             return downPiece

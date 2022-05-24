@@ -1,5 +1,4 @@
-from UseCases.General.StartedDeck import StartedDeck
-from UseCases.General.EmptyDeck import EmptyDeck
+from UseCases.General.DefaultDeck import DefaultDeck
 from UseCases.SolitaireLogic.stockNwastePiles import StockAndWasteRelationship
 from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout
 from PyQt5.QtCore import QSize
@@ -39,11 +38,16 @@ class StockAndWasteWidget(QWidget):
         self.WastePileWidget.show()
         super(StockAndWasteWidget, self).show()
 
+    def refresh(self):
+        self.StockPileWidget.refresh()
+        self.WastePileWidget.refresh()
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    deck = StartedDeck()
-    deck.makeRandomSequence()
-    window = StockAndWasteWidget(deck, EmptyDeck())
+    Deck = DefaultDeck()
+    Deck.makeDefaultSequence()
+    Deck.makeRandomSequence()
+    window = StockAndWasteWidget(Deck, DefaultDeck())
     window.show()
     sys.exit(app.exec())

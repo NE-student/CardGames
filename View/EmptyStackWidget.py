@@ -1,10 +1,13 @@
 from Infrastructure.DataAccess.FilePath import blankPileUi
-from UseCases.General.StartedDeck import StartedDeck, EmptyDeck
+from UseCases.General.DefaultDeck import DefaultDeck
 from View.StackWidget import StackWidget
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout
+from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5 import uic
 import sys
 
+class Signals(QObject):
+    dropCard = pyqtSignal(str, int)
 
 class EmptyStackWidget(QWidget):
     def __init__(self, deck, mouseTracking=True,parent=None):
@@ -14,6 +17,8 @@ class EmptyStackWidget(QWidget):
         self.StackWidget = StackWidget(deck, self)
         self.deck = deck
 
+        self.signals = Signals()
+
         self.Layout.addWidget(self.ui)
         self.Layout.addWidget(self.StackWidget)
 
@@ -21,10 +26,18 @@ class EmptyStackWidget(QWidget):
         self.setMinimumSize(self.ui.minimumSize())
         self.setLayout(self.Layout)
 
+        self.setAcceptDrops(True)
 
-    def mouseMoveEvent(self, e) -> None:
-        self.StackWidget.mouseMoveEvent(e)
-        super(EmptyStackWidget, self).mouseMoveEvent(e)
+    def dragEnterEvent(self, a0) -> None:
+        a0.accept()
+
+    def dropEvent(self, a0) -> None:
+        self.signals.dropCard.emit(a0.mimeData().text().split("/")[0], int(a0.mimeData().text().split("/")[1]))
+        a0.accept()
+
+    def refresh(self):
+        if not self.deck.isEmpty():
+            self.StackWidget.refresh()
 
 
     def show(self) -> None:
@@ -38,8 +51,9 @@ class EmptyStackWidget(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    deck = EmptyDeck()
-    #deck.makeRandomSequence()
+    deck = DefaultDeck()
+    deck.makeDefaultSequence()
+    deck.makeRandomSequence()
     window = EmptyStackWidget(deck)
     window.show()
     sys.exit(app.exec())

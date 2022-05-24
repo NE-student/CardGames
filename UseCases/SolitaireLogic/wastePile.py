@@ -1,8 +1,8 @@
-from UseCases.General.EmptyDeck import EmptyDeck
+from UseCases.General.DefaultDeck import DefaultDeck
 from Entities.Card import Card
 
 
-class WastePile(EmptyDeck):
+class WastePile(DefaultDeck):
     def __init__(self):
         super(WastePile, self).__init__()
 

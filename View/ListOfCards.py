@@ -1,6 +1,6 @@
 from View.CardWidget import CardWidget
 from View.OpenGLEffects import BackGround
-from UseCases.General.StartedDeck import StartedDeck
+from UseCases.General.DefaultDeck import DefaultDeck
 from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QGridLayout
 from PyQt5.QtCore import QSize
 import sys
@@ -40,7 +40,8 @@ class ListOfCards(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    deck = StartedDeck()
+    deck = DefaultDeck()
+    deck.makeDefaultSequence()
     window = ListOfCards(deck, BackGround)
     window.show()
     sys.exit(app.exec())

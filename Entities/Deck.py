@@ -10,7 +10,9 @@ class Deck:
         return StackIterator(self._cards)
 
     def __getitem__(self, item):
-        if isinstance(item, int) and not self.isEmpty():
+        if self.isEmpty():
+            return None
+        if isinstance(item, int):
             return self._cards[item]
         return None
 
@@ -23,6 +25,12 @@ class Deck:
             result += f"{card}; \n"
         return result
 
+    def find(self, rank, mark):
+        for card in self._cards:
+            if rank == card.rank and mark == card.mark.value:
+                return card
+        return None
+
     def append(self, card: Card):
         if isinstance(card, Card):
             self._cards.append(card)
@@ -33,8 +41,14 @@ class Deck:
         for card in cards:
             self.append(card)
 
-    def popCard(self, index=-1):
-        return self._cards.pop(index)
+    def pop(self, index=-1):
+        if isinstance(index, Card):
+            for i, card in enumerate(self._cards):
+                if index == card:
+                    return self._cards.pop(i)
+        if isinstance(index, int):
+            return self._cards.pop(index)
+        return None
 
     def popCards(self):
         tmp = self.getCards()
