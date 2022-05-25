@@ -28,6 +28,7 @@ class ColumnOfTableauWidget(QWidget):
         self.signals.dropCard.emit(self.ColumnOfTableau, rank, mark)
 
     def refresh(self):
+        self.ColumnOfTableau.showLastCard()
         self.EmptyStackWidget.refresh()
 
     def dragEnterEvent(self, a0) -> None:

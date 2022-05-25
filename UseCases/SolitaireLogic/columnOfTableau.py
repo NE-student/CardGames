@@ -3,15 +3,16 @@ from Entities.Card import Card
 from UseCases.General.DefaultCard import DefaultCard
 from Infrastructure.DataAccess.CardDataAccess import CardInfo
 from Infrastructure.ListHelper import isNextElement
+from copy import deepcopy
 
 
 class ColumnOfTableau(DefaultDeck):
-    reverseRanksSequence = CardInfo.ranks
+    reverseRanksSequence = deepcopy(CardInfo.ranks)
     KingCode = 0
 
-    def __init__(self):
-        super(ColumnOfTableau, self).__init__()
-        self.reverseRanksSequence.reverse()
+    def __init__(self, deck=None):
+        super(ColumnOfTableau, self).__init__(deck)
+        self.reverseRanksSequence = self.reverseRanksSequence[::-1]
 
     def append(self, card: DefaultCard, permanently=False):
         if permanently:
@@ -31,11 +32,19 @@ class ColumnOfTableau(DefaultDeck):
             return True
         return False
 
+    def copy(self):
+        return ColumnOfTableau(self._cards.copy())
+
     def showLastCard(self):
         if self[-1] is not None and not self[-1].isStatsVisible:
             self[-1].flip()
 
-    def appendCards(self, cards: list):
+    def appendCards(self, cards: list, permanently=False):
+        if len(cards) == 0:
+            return True
+        if permanently:
+            super(ColumnOfTableau, self).appendCards(cards)
+            return True
         if self.isEmpty() and \
                 cards[self.KingCode].rank == self.reverseRanksSequence[self.KingCode]:
             super(ColumnOfTableau, self).appendCards(cards)
@@ -47,20 +56,17 @@ class ColumnOfTableau(DefaultDeck):
             return True
         return False
 
-    def pop(self, index:int):
+    def pop(self, index):
         if isinstance(index, Card):
             card = super(ColumnOfTableau, self).pop(index)
-            self.showLastCard()
             return card
         if index == -1 or index == len(self.getCards())-1:
             card = super(ColumnOfTableau, self).pop()
-            self.showLastCard()
             return card
         else:
             tmp = self.getCards()
             upPiece = tmp[:index]
             downPiece = tmp[index:]
             self.popCards()
-            self.appendCards(upPiece)
-            self.showLastCard()
+            self.appendCards(upPiece, permanently=True)
             return downPiece

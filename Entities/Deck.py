@@ -4,10 +4,16 @@ from Entities.Card import *
 
 class Deck:
     def __init__(self, cards):
-        self._cards = cards
+        if isinstance(cards, list):
+            self._cards = cards
+        if isinstance(cards, Deck):
+            self._cards = cards.getCards()
 
     def __iter__(self):
         return StackIterator(self._cards)
+
+    def copy(self):
+        return Deck(self._cards.copy())
 
     def __getitem__(self, item):
         if self.isEmpty():

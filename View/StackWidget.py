@@ -25,21 +25,19 @@ class StackWidget(QWidget):
         card.deleteLater()
 
     def refresh(self):
+        self.hideChildren()
         if len(self.cardWidgets) < len(self.deck):
-            self.hideChildren()
             self.deleteChildren()
             self.cardWidgets.clear()
             for i in range(len(self.deck)):
                 card = self.addCardWidget(self.deck[i])
                 card.signals.popCard.connect(self.popCard)
-                card.show()
         if len(self.cardWidgets) > len(self.deck):
-            self.hideChildren()
-            for index, item in enumerate(self.cardWidgets):
-                if index >= len(self.cardWidgets)-1:
-                    self.cardWidgets.pop(index)
-                    item.hide()
-                    item.deleteLater()
+            while len(self.cardWidgets) > len(self.deck):
+                item = self.cardWidgets.pop(-1)
+                item.hide()
+                item.deleteLater()
+
         self.showChildren()
         if not self.deck.isEmpty():
             self.alignmentCenter()
