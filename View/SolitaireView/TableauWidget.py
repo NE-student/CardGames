@@ -12,6 +12,9 @@ class TableauWidget(QWidget):
         for column in self.columns:
             self.layout().addWidget(column)
 
+        self.layout().setSpacing(3)
+        self.layout().setContentsMargins(0, 0, 0, 0)
+
     def refresh(self, columns):
         for index, column in enumerate(self.columns):
             columns[index].showLastCard()

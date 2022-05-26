@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>120</width>
-    <height>180</height>
+    <width>94</width>
+    <height>80</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>80</height>
+   </size>
   </property>
   <property name="maximumSize">
    <size>
@@ -37,17 +49,24 @@
    </property>
    <item>
     <widget class="QFrame" name="blankArea">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>60</width>
-       <height>120</height>
+       <width>50</width>
+       <height>80</height>
       </size>
      </property>
      <property name="styleSheet">
       <string notr="true">#blankArea
 {
 	
-	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:1.145, fx:0.5, fy:0.5, stop:0 rgba(255, 255, 255, 196), stop:1 rgba(219, 194, 232, 255));
+	
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(201, 199, 219, 255), stop:1 rgba(255, 255, 255, 255));
 }</string>
      </property>
      <property name="frameShape">

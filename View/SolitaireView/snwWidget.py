@@ -17,7 +17,11 @@ class StockAndWasteWidget(QWidget):
 
         self.setLayout(self.Layout)
 
-        self.setMinimumSize(QSize(200,160))
+        g = self.StockPileWidget.minimumSize()
+        g.setWidth(g.width()+150)
+        self.setMinimumSize(g)
+
+        self.Layout.setContentsMargins(0, 0, 0, 0)
 
 
 

@@ -12,8 +12,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>60</width>
-    <height>130</height>
+    <width>0</width>
+    <height>80</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -48,7 +48,9 @@
 {
 	
 	
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(70, 177, 255, 255), stop:0.494318 rgba(215, 120, 225, 255), stop:1 rgba(255, 234, 167, 255));
+	
+	
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(69, 156, 142, 255), stop:1 rgba(6, 45, 79, 209));
 }</string>
      </property>
      <property name="frameShape">

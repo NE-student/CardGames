@@ -81,8 +81,6 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     testCard = DefaultCard()
     window = CardWidget()
-
-    #window = Background()
     window.show()
     sys.exit(app.exec())
 

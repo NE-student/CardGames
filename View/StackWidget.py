@@ -59,7 +59,7 @@ class StackWidget(QWidget):
         for child in self.cardWidgets:
             geometry = child.geometry()
             geometry.setWidth(int(self.width()))
-            geometry.setHeight(int(geometry.height() / len(self.deck)))
+            geometry.setHeight(int(geometry.height()))
             child.setGeometry(geometry)
 
     def alignmentCenter(self):
@@ -74,7 +74,7 @@ class StackWidget(QWidget):
             geometry = child.geometry()
             geometry.setY(y)
             child.setGeometry(geometry)
-            y += int((geometry.height()) / (len(self.deck)))
+            y += int((geometry.height() / len(self.deck)+50))
 
     def resizeEvent(self, a0) -> None:
         if not self.deck.isEmpty():
@@ -83,11 +83,3 @@ class StackWidget(QWidget):
             self.resizeCards()
             self.offsetResize()
         super(StackWidget, self).resizeEvent(a0)
-
-"""
-        if len(self.cardWidgets) > len(self.deck):
-            while len(self.cardWidgets) > len(self.deck):
-                item = self.cardWidgets.pop(-1)
-                item.hide()
-                item.deleteLater()
-        """
