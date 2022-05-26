@@ -1,9 +1,9 @@
 from UseCases.General.DefaultDeck import DefaultDeck
 
-class RelationShip:
+class Relationship:
     @staticmethod
     def sendCard(card, receiver, sender):
-        index = RelationShip.findCardIndex(sender, card)
+        index = Relationship.findCardIndex(sender, card)
         deck = sender.copy()
         card = deck.pop(index)
         if isinstance(card, list):

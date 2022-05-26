@@ -5,7 +5,7 @@ from UseCases.SolitaireLogic.stockPile import StockPile
 from UseCases.SolitaireLogic.wastePile import WastePile
 from UseCases.SolitaireLogic.foundationPile import FoundationPile
 from UseCases.General.DefaultDeck import DefaultDeck
-from UseCases.SolitaireLogic.Relationship import RelationShip
+from UseCases.SolitaireLogic.Relationship import Relationship
 from random import randint as rn
 
 
@@ -17,7 +17,7 @@ class Solitaire(Game):
         self.snw = StockAndWasteRelationship(self.stock, self.waste)
         self.foundationPiles = [FoundationPile() for i in range(4)]
         self.startDeck = None
-        self.RelationShip = RelationShip()
+        self.Relationship = Relationship()
 
     def start(self):
         self.startDeck = DefaultDeck()

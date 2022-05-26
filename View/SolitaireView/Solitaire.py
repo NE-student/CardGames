@@ -37,8 +37,8 @@ class SolitaireWidget(QWidget):
         self.setMinimumSize(self.ui.minimumSize())
 
     def dropCard(self, receiver, rank, mark):
-        card, sender = self.Solitaire.RelationShip.findCard(self.Solitaire, rank, mark)
-        self.Solitaire.RelationShip.sendCard(card, receiver, sender)
+        card, sender = self.Solitaire.Relationship.findCard(self.Solitaire, rank, mark)
+        self.Solitaire.Relationship.sendCard(card, receiver, sender)
         self.refresh()
 
     def refresh(self):
