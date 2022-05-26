@@ -7,10 +7,6 @@ from Infrastructure.DataAccess.FilePath import cardUi, imgTypesCard, backCardUi
 import sys
 import pickle
 
-class Signals(QObject):
-
-    popCard = pyqtSignal()
-
 class CardWidget(QPushButton):
     def __init__(self, card=None, mouseTracking = True,parent=None):
         super().__init__(parent)
@@ -28,8 +24,6 @@ class CardWidget(QPushButton):
         self.Layout.addWidget(self.bg)
         self.setLayout(self.Layout)
 
-        self.signals = Signals()
-
         self.Layout.setContentsMargins(0, 0, 0, 0)
         self.setMinimumSize(self.ui.minimumSize())
         self.setMaximumSize(self.ui.maximumSize())
@@ -41,9 +35,7 @@ class CardWidget(QPushButton):
             drag = QDrag(self)
             drag.setMimeData(mimedata)
             drag.setHotSpot(e.pos())
-            dropAction = drag.exec_(Qt.MoveAction)
-            #if dropAction==2:
-                #self.signals.popCard.emit()
+            drag.exec_(Qt.MoveAction)
 
 
 

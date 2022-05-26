@@ -1,5 +1,5 @@
 from Infrastructure.DataAccess.FilePath import blankPileUi
-from UseCases.General.DefaultDeck import DefaultDeck
+from Entities.Deck import Deck
 from View.CardWidget import CardWidget
 from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout
 from PyQt5.QtCore import QObject, pyqtSignal
@@ -7,7 +7,7 @@ from PyQt5 import uic
 import sys
 
 class Signals(QObject):
-    dropCard = pyqtSignal(str, int)
+    dropCard = pyqtSignal(Deck, str, int)
 
 
 class EmptyDeckWidget(QPushButton):
@@ -34,14 +34,15 @@ class EmptyDeckWidget(QPushButton):
         a0.accept()
 
     def dropEvent(self, a0) -> None:
-        self.signals.dropCard.emit(a0.mimeData().text().split("/")[0], int(a0.mimeData().text().split("/")[1]))
+        self.signals.dropCard.emit(self.deck, a0.mimeData().text().split("/")[0], int(a0.mimeData().text().split("/")[1]))
         a0.accept()
 
     def mouseMoveEvent(self, e) -> None:
         self.LastCard.mouseMoveEvent(e)
         super(EmptyDeckWidget, self).mouseMoveEvent(e)
 
-    def refresh(self):
+    def refresh(self, deck):
+        self.deck = deck
         self.LastCard.setCard(self.deck[-1])
 
     def show(self) -> None:
@@ -49,16 +50,8 @@ class EmptyDeckWidget(QPushButton):
             self.ui.show()
             self.LastCard.hide()
         else:
-            self.refresh()
+            self.refresh(self.deck)
             self.ui.hide()
             self.LastCard.show()
         super(EmptyDeckWidget, self).show()
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    deck = DefaultDeck()
-    deck.makeDefaultSequence()
-    deck.makeRandomSequence()
-    window = EmptyDeckWidget(deck)
-    window.show()
-    sys.exit(app.exec())
