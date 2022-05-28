@@ -1,26 +1,27 @@
 from Infrastructure.DataAccess.FilePath import blankPileUi
 from Entities.Deck import Deck
 from View.StackWidget import StackWidget
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout
-from PyQt5.QtCore import QObject, pyqtSignal
+from PyQt5.QtWidgets import QWidget, QHBoxLayout
+from PyQt5.QtCore import QObject, pyqtSignal, Qt
 from PyQt5 import uic
-import sys
+
 
 class Signals(QObject):
     dropCard = pyqtSignal(Deck, str, int)
 
+
 class EmptyStackWidget(QWidget):
     def __init__(self, deck, parent=None):
         super(EmptyStackWidget, self).__init__(parent)
-        self.Layout = QVBoxLayout(self)
+        self.Layout = QHBoxLayout(self)
         self.ui = uic.loadUi(blankPileUi)
         self.StackWidget = StackWidget(deck, self)
-
 
         self.signals = Signals()
 
         self.Layout.addWidget(self.ui)
         self.Layout.addWidget(self.StackWidget)
+        self.Layout.setAlignment(self.ui, Qt.AlignTop)
 
         self.Layout.setContentsMargins(0, 0, 0, 0)
         self.setMinimumSize(self.ui.minimumSize())
@@ -37,7 +38,6 @@ class EmptyStackWidget(QWidget):
 
     def refresh(self, deck):
         self.StackWidget.refresh(deck)
-
 
     def show(self) -> None:
         if self.StackWidget.deck.isEmpty():

@@ -36,7 +36,3 @@ class DefaultCard(Card):
         except ValueError:
             print(f"Value {value} is not defined, available values is {CardInfo.ranks.getAllValues()}")
 
-if __name__ == "__main__":
-    da = DefaultCard()
-    da.mark = CardInfo.marks.Hearts
-    print(da.mark)

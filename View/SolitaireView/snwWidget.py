@@ -1,7 +1,5 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout
-from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QWidget, QHBoxLayout
 from View.EmptyDeckWidget import EmptyDeckWidget
-import sys
 
 
 class StockAndWasteWidget(QWidget):
@@ -21,9 +19,8 @@ class StockAndWasteWidget(QWidget):
         g.setWidth(g.width()+150)
         self.setMinimumSize(g)
 
-        self.Layout.setContentsMargins(0, 0, 0, 0)
-
-
+        self.Layout.setContentsMargins(15, 0, 0, 0)
+        self.Layout.setSpacing(3)
 
     def show(self) -> None:
         self.StockPileWidget.show()

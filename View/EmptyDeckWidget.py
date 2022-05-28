@@ -1,10 +1,10 @@
 from Infrastructure.DataAccess.FilePath import blankPileUi
 from Entities.Deck import Deck
 from View.CardWidget import CardWidget
-from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout
+from PyQt5.QtWidgets import QPushButton, QVBoxLayout
 from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5 import uic
-import sys
+
 
 class Signals(QObject):
     dropCard = pyqtSignal(Deck, str, int)

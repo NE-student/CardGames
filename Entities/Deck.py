@@ -39,6 +39,9 @@ class Deck:
                 return card
         return None
 
+    def reverse(self):
+        self._cards = self._cards[::-1]
+
     def append(self, T):
         if isinstance(T, Card):
             self._cards.append(T)
@@ -66,6 +69,9 @@ class Deck:
             return Deck(down)
         return None
 
+    def dev_pop(self, index):
+        return self._cards.pop(index)
+
     def getCards(self):
         return self._cards.copy()
 
@@ -83,7 +89,7 @@ class Deck:
             length = len(self)
             while length > 0:
                 index = rn(0, length-1)
-                tmp.append(self.pop(index))
+                tmp.append(self.dev_pop(index))
                 length = len(self)
             self.append(tmp)
 

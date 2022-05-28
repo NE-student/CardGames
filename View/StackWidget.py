@@ -1,9 +1,8 @@
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import pyqtSignal, QObject
 from View.CardWidget import CardWidget
 from UseCases.General.DefaultCard import DefaultCard
 
-import sys
 
 class Signals(QObject):
     popCard = pyqtSignal()
@@ -20,6 +19,7 @@ class StackWidget(QWidget):
 
         card = CardWidget(DefaultCard())
         self.setMinimumSize(card.minimumSize())
+
         card.deleteLater()
 
     def refresh(self, deck):
@@ -74,7 +74,7 @@ class StackWidget(QWidget):
             geometry = child.geometry()
             geometry.setY(y)
             child.setGeometry(geometry)
-            y += int((geometry.height() / len(self.deck)+50))
+            y += int((geometry.height() / len(self.deck)+30))
 
     def resizeEvent(self, a0) -> None:
         if not self.deck.isEmpty():

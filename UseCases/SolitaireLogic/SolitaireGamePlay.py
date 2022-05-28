@@ -25,12 +25,12 @@ class SolitaireGamePlay:
         self.stepIndex +=1
 
     def undoStep(self):
-        if self.stepIndex >= 0:
+        if self.stepIndex > 0:
             self.stepIndex -= 1
             self.setStep()
 
     def redoStep(self):
-        if self.stepIndex <= len(self.Steps):
+        if self.stepIndex < len(self.Steps)-1:
             self.stepIndex += 1
             self.setStep()
 
@@ -39,8 +39,6 @@ class SolitaireGamePlay:
         self.SolitaireZone.StockPile = deepcopy(self.Steps[self.stepIndex]["StockPile"])
         self.SolitaireZone.WastePile = deepcopy(self.Steps[self.stepIndex]["WastePile"])
         self.SolitaireZone.FoundationPiles = deepcopy(self.Steps[self.stepIndex]["FoundationPiles"])
-        print(self.stepIndex)
-
 
     def appendToStockPile(self, deck):
         deck.hideAllCardsStats()
@@ -141,6 +139,7 @@ class SolitaireGamePlay:
 
     def SendToStockPileFromWastePile(self):
         deck = self.SolitaireZone.WastePile.pop(0)
+        deck.reverse()
         self.appendToStockPile(deck)
 
     def findReciever(self, deck):
@@ -152,6 +151,12 @@ class SolitaireGamePlay:
             for pile in self.SolitaireZone.FoundationPiles:
                 if deck == pile:
                     return pile
+
+    def isWin(self):
+        for pile in self.SolitaireZone.FoundationPiles:
+            if not pile.isCompleted():
+                return False
+        return True
 
     def findCard(self, rank, mark):
         card = None

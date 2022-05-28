@@ -17,6 +17,8 @@ class FoundationPile(Deck):
         return super(FoundationPile, self).pop(index)
 
     def isCompleted(self):
-        if (self.getCards()[-1].rank == CardInfo.ranks[-1]):
-            return True
-        return False
+        if self.isEmpty():
+            return False
+        if not self.getCards()[-1].rank == CardInfo.ranks[-1]:
+            return False
+        return True

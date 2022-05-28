@@ -1,11 +1,10 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QHBoxLayout
 from View.EmptyStackWidget import EmptyStackWidget
 
 
 class TableauWidget(QWidget):
-    def __init__(self, Columns, parent=None):
+    def __init__(self, Tableau, parent=None):
         super(TableauWidget, self).__init__(parent)
-        Tableau = Columns
         self.columns = [EmptyStackWidget(Tableau[i], self) for i in range(len(Tableau))]
 
         self.setLayout(QHBoxLayout(self))

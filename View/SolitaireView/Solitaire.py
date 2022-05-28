@@ -1,15 +1,16 @@
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import QWidget
+from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5 import uic
 from View.SolitaireView.snwWidget import StockAndWasteWidget
 from View.SolitaireView.TableauWidget import TableauWidget
 from View.EmptyDeckWidget import EmptyDeckWidget
 from UseCases.SolitaireLogic.SolitaireGamePlay import SolitaireGamePlay, SolitaireZone
-from UseCases.SolitaireLogic.foundationPile import FoundationPile
-from UseCases.SolitaireLogic.columnOfTableau import ColumnOfTableau
 from Infrastructure.DataAccess.FilePath import solitaireUi
 
 
-import sys
+class Signals(QObject):
+    gameEnd = pyqtSignal()
+    stepped = pyqtSignal()
 
 
 class SolitaireWidget(QWidget):
@@ -19,6 +20,8 @@ class SolitaireWidget(QWidget):
         self.ui = uic.loadUi(solitaireUi)
         self.GameZone = SolitaireZone()
         self.GamePlay = SolitaireGamePlay(self.GameZone)
+
+        self.signals = Signals()
 
         self.snw = StockAndWasteWidget(self.GameZone.StockPile, self.GameZone.WastePile)
         self.snw.StockPileWidget.clicked.connect(self.StockPileWidgetclicked)
@@ -38,6 +41,7 @@ class SolitaireWidget(QWidget):
         self.setLayout(self.ui.layout())
 
         self.setMinimumSize(self.ui.minimumSize())
+        self.setMaximumSize(self.ui.maximumSize())
 
     def StockPileWidgetclicked(self):
         if self.GameZone.StockPile.isEmpty():
@@ -55,6 +59,8 @@ class SolitaireWidget(QWidget):
         elif sender is self.GameZone.WastePile:
             self.GamePlay.SendToFoundationPileFromWastePile(receiver.index)
         self.refresh()
+        if self.GamePlay.isWin():
+            self.signals.gameEnd.emit()
 
     def dropCardToColumnOfTableau(self, receiver, rank, mark):
         card, sender = self.GamePlay.findCard(rank, mark)
@@ -68,6 +74,7 @@ class SolitaireWidget(QWidget):
         self.refresh()
 
     def refresh(self):
+        self.signals.stepped.emit()
         for index, pile in enumerate(self.FoundationPileWidgets):
             pile.refresh(self.GameZone.FoundationPiles[index])
         self.snw.refresh(self.GameZone.StockPile, self.GameZone.WastePile)
@@ -81,11 +88,3 @@ class SolitaireWidget(QWidget):
         self.TableauWidget.show()
         self.snw.show()
         super(SolitaireWidget, self).show()
-
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = SolitaireWidget()
-    window.show()
-    sys.exit(app.exec())
