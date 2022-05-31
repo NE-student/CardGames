@@ -14,4 +14,5 @@ backCardUi = uiFolder + "backcard.ui"
 stockPileUi = uiFolder + "stockPile.ui"
 blankPileUi = uiFolder + "BlankDeck.ui"
 solitaireUi = uiFolder + "Solitaire.ui"
+GameWindowUi = uiFolder + "GameWindow.ui"
 

@@ -1,18 +1,12 @@
-from UseCases.General.DefaultCard import DefaultCard
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
-from PyQt5.QtCore import Qt, QMimeData, pyqtSignal, QObject
+from PyQt5.QtWidgets import QWidget, QPushButton, QVBoxLayout
+from PyQt5.QtCore import Qt, QMimeData
 from PyQt5.QtGui import QDrag
 from PyQt5 import uic, QtGui
 from Infrastructure.DataAccess.FilePath import cardUi, imgTypesCard, backCardUi
-import sys
-import pickle
 
-class Signals(QObject):
-
-    popCard = pyqtSignal()
 
 class CardWidget(QPushButton):
-    def __init__(self, card=None, mouseTracking = True,parent=None):
+    def __init__(self, card=None, mouseTracking=True, parent=None):
         super().__init__(parent)
 
         self.ui = uic.loadUi(cardUi)
@@ -28,8 +22,6 @@ class CardWidget(QPushButton):
         self.Layout.addWidget(self.bg)
         self.setLayout(self.Layout)
 
-        self.signals = Signals()
-
         self.Layout.setContentsMargins(0, 0, 0, 0)
         self.setMinimumSize(self.ui.minimumSize())
         self.setMaximumSize(self.ui.maximumSize())
@@ -41,16 +33,16 @@ class CardWidget(QPushButton):
             drag = QDrag(self)
             drag.setMimeData(mimedata)
             drag.setHotSpot(e.pos())
-            dropAction = drag.exec_(Qt.MoveAction)
-            #if dropAction==2:
-                #self.signals.popCard.emit()
-
-
+            drag.exec_(Qt.MoveAction)
 
     def setCard(self, card):
         self.card = card
         if self.card is not None:
             self.grade_lbl.setText(self.card.rank)
+            if self.card.isRed():
+                self.grade_lbl.setStyleSheet("color:#942706;")
+            else:
+                self.grade_lbl.setStyleSheet("color:black;")
             self.image_lbl.setPixmap(QtGui.QPixmap.fromImage(QtGui.QImage(imgTypesCard[self.card.mark.value])))
 
     def showBackSide(self):
@@ -83,16 +75,3 @@ class Background(QWidget):
         self.setLayout(self.ui.layout())
         self.setMinimumSize(self.ui.minimumSize())
         self.setMaximumSize(self.ui.maximumSize())
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    testCard = DefaultCard()
-    window = CardWidget()
-
-    #window = Background()
-    window.show()
-    sys.exit(app.exec())
-
-
-

@@ -1,26 +1,27 @@
 from Infrastructure.DataAccess.FilePath import blankPileUi
-from UseCases.General.DefaultDeck import DefaultDeck
+from Entities.Deck import Deck
 from View.StackWidget import StackWidget
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout
-from PyQt5.QtCore import QObject, pyqtSignal
+from PyQt5.QtWidgets import QWidget, QHBoxLayout
+from PyQt5.QtCore import QObject, pyqtSignal, Qt
 from PyQt5 import uic
-import sys
+
 
 class Signals(QObject):
-    dropCard = pyqtSignal(str, int)
+    dropCard = pyqtSignal(Deck, str, int)
+
 
 class EmptyStackWidget(QWidget):
-    def __init__(self, deck, mouseTracking=True,parent=None):
+    def __init__(self, deck, parent=None):
         super(EmptyStackWidget, self).__init__(parent)
-        self.Layout = QVBoxLayout(self)
+        self.Layout = QHBoxLayout(self)
         self.ui = uic.loadUi(blankPileUi)
         self.StackWidget = StackWidget(deck, self)
-        self.deck = deck
 
         self.signals = Signals()
 
         self.Layout.addWidget(self.ui)
         self.Layout.addWidget(self.StackWidget)
+        self.Layout.setAlignment(self.ui, Qt.AlignTop)
 
         self.Layout.setContentsMargins(0, 0, 0, 0)
         self.setMinimumSize(self.ui.minimumSize())
@@ -32,16 +33,14 @@ class EmptyStackWidget(QWidget):
         a0.accept()
 
     def dropEvent(self, a0) -> None:
-        self.signals.dropCard.emit(a0.mimeData().text().split("/")[0], int(a0.mimeData().text().split("/")[1]))
+        self.signals.dropCard.emit(self.StackWidget.deck, a0.mimeData().text().split("/")[0], int(a0.mimeData().text().split("/")[1]))
         a0.accept()
 
-    def refresh(self):
-        if not self.deck.isEmpty():
-            self.StackWidget.refresh()
-
+    def refresh(self, deck):
+        self.StackWidget.refresh(deck)
 
     def show(self) -> None:
-        if self.deck.isEmpty():
+        if self.StackWidget.deck.isEmpty():
             self.ui.show()
             self.StackWidget.hide()
         else:
@@ -49,11 +48,3 @@ class EmptyStackWidget(QWidget):
             self.StackWidget.show()
         super(EmptyStackWidget, self).show()
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    deck = DefaultDeck()
-    deck.makeDefaultSequence()
-    deck.makeRandomSequence()
-    window = EmptyStackWidget(deck)
-    window.show()
-    sys.exit(app.exec())

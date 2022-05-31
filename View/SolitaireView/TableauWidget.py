@@ -1,21 +1,23 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout
-from UseCases.SolitaireLogic.Tableau import Tableau
-from View.SolitaireView.columnOfTableauWidget import ColumnOfTableauWidget
+from PyQt5.QtWidgets import QWidget, QHBoxLayout
+from View.EmptyStackWidget import EmptyStackWidget
 
 
 class TableauWidget(QWidget):
     def __init__(self, Tableau, parent=None):
         super(TableauWidget, self).__init__(parent)
-        self.Tableau = Tableau
-        self.columns = [ColumnOfTableauWidget(self.Tableau.columns[i], self) for i in range(len(self.Tableau.columns))]
+        self.columns = [EmptyStackWidget(Tableau[i], self) for i in range(len(Tableau))]
 
         self.setLayout(QHBoxLayout(self))
         for column in self.columns:
             self.layout().addWidget(column)
 
-    def refresh(self):
-        for column in self.columns:
-            column.refresh()
+        self.layout().setSpacing(3)
+        self.layout().setContentsMargins(0, 0, 0, 0)
+
+    def refresh(self, columns):
+        for index, column in enumerate(self.columns):
+            columns[index].showLastCard()
+            column.refresh(columns[index])
 
     def dropCardconnect(self, slot):
         for column in self.columns:

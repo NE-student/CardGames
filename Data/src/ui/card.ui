@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>Card</class>
+ <widget class="QWidget" name="Card">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -10,10 +10,16 @@
     <height>180</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
-    <width>60</width>
-    <height>130</height>
+    <width>40</width>
+    <height>80</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -41,9 +47,7 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">.QFrame{
-	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:2, fx:0.5, fy:0.5, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(191, 191, 191, 255));
-}</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -63,30 +67,35 @@
    </property>
    <item>
     <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>60</width>
-       <height>120</height>
+       <width>0</width>
+       <height>0</height>
       </size>
      </property>
      <property name="styleSheet">
       <string notr="true">#frame
 {
-	
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(223, 223, 223, 255));
 }</string>
      </property>
      <property name="frameShape">
-      <enum>QFrame::Box</enum>
+      <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
+      <enum>QFrame::Sunken</enum>
      </property>
      <property name="lineWidth">
-      <number>1</number>
+      <number>6</number>
      </property>
      <property name="midLineWidth">
-      <number>0</number>
+      <number>2</number>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
@@ -107,7 +116,7 @@
       <item>
        <widget class="QLabel" name="Grade">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -121,7 +130,7 @@
         <property name="font">
          <font>
           <family>Engravers MT</family>
-          <pointsize>16</pointsize>
+          <pointsize>12</pointsize>
          </font>
         </property>
         <property name="text">

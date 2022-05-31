@@ -1,19 +1,17 @@
 from Infrastructure.StackIterator import StackIterator
 from Entities.Card import *
+from random import randint as rn
+import copy
 
 
 class Deck:
-    def __init__(self, cards):
-        if isinstance(cards, list):
-            self._cards = cards
-        if isinstance(cards, Deck):
-            self._cards = cards.getCards()
+    def __init__(self, cards=None):
+        self._cards = []
+        if cards is not None:
+            self.append(cards)
 
     def __iter__(self):
         return StackIterator(self._cards)
-
-    def copy(self):
-        return Deck(self._cards.copy())
 
     def __getitem__(self, item):
         if self.isEmpty():
@@ -31,43 +29,86 @@ class Deck:
             result += f"{card}; \n"
         return result
 
+    def __copy__(self):
+        print('__copy__()')
+        return Deck(self)
+
     def find(self, rank, mark):
         for card in self._cards:
             if rank == card.rank and mark == card.mark.value:
                 return card
         return None
 
-    def append(self, card: Card):
-        if isinstance(card, Card):
-            self._cards.append(card)
+    def reverse(self):
+        self._cards = self._cards[::-1]
+
+    def append(self, T):
+        if isinstance(T, Card):
+            self._cards.append(T)
+            return True
+        if isinstance(T, list):
+            for item in T:
+                self.append(item)
+            return True
+        if isinstance(T, Deck):
+            cards = T.getCards()
+            self.append(cards)
             return True
         return False
 
-    def appendCards(self, cards: list):
-        for card in cards:
-            self.append(card)
-
-    def pop(self, index=-1):
-        if isinstance(index, Card):
+    def pop(self, T):
+        if isinstance(T, Card):
             for i, card in enumerate(self._cards):
-                if index == card:
-                    return self._cards.pop(i)
-        if isinstance(index, int):
-            return self._cards.pop(index)
+                if T == card:
+                    return self.pop(i)
+        if isinstance(T, int):
+            up = self._cards[:T]
+            down = self._cards[T:]
+            self.clear()
+            self.append(up)
+            return Deck(down)
         return None
 
-    def popCards(self):
-        tmp = self.getCards()
-        self._cards = []
-        return tmp
+    def dev_pop(self, index):
+        return self._cards.pop(index)
 
     def getCards(self):
         return self._cards.copy()
+
+    def clear(self):
+        self._cards = []
 
     def isEmpty(self):
         if len(self) == 0:
             return True
         return False
+
+    def makeRandomSequence(self, index = 1):
+        for i in range(index):
+            tmp = []
+            length = len(self)
+            while length > 0:
+                index = rn(0, length-1)
+                tmp.append(self.dev_pop(index))
+                length = len(self)
+            self.append(tmp)
+
+
+    def isAllCardsVisible(self):
+        for card in self:
+            if card.isStatsVisible == False:
+                return False
+        return True
+
+    def showAllCardsStats(self):
+        for card in self:
+            if not card.isStatsVisible:
+                card.flip()
+
+    def hideAllCardsStats(self):
+        for card in self:
+            if card.isStatsVisible:
+                card.flip()
 
 
 
